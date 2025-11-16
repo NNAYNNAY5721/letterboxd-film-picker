@@ -2,8 +2,11 @@ import random
 import streamlit as st
 import pandas as pd
 
-st.set_page_config(page_title="Générateur Letterboxd", layout="centered")
-st.markdown("<h1 style='text-align:center; color:#00ADB5;'>🎬 Générateur de films Letterboxd</h1>", unsafe_allow_html=True)
+# --- Configuration de la page ---
+st.set_page_config(page_title="Nouka Pictures", layout="centered")
+
+# --- Titre ---
+st.markdown("<h1 style='text-align:center; color:#00ADB5;'>🎬 Nouka Pictures</h1>", unsafe_allow_html=True)
 
 # --- Import CSV Letterboxd ---
 st.markdown("### 📂 Importer votre fichier CSV Letterboxd")
@@ -15,7 +18,7 @@ if uploaded_file:
     try:
         df = pd.read_csv(uploaded_file, encoding='utf-8-sig')
         
-        # --- Mapper automatiquement les colonnes ---
+        # --- Détecter automatiquement les colonnes ---
         col_map = {}
         for col in df.columns:
             c = col.lower()
