@@ -4,46 +4,62 @@ import pandas as pd
 import urllib.parse
 
 # --- Configuration de la page ---
-st.set_page_config(page_title="Nouka Pictures", layout="centered")
+st.set_page_config(page_title="Nouka Pictures", layout="wide")
 
-# --- CSS minimaliste ---
+# --- CSS pour style cinéma et boutons animés ---
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Roboto:wght@500&display=swap');
 
 body {
-    background-color: #f9f9f9;
-    color: #222831;
+    background-color: #121212;
+    color: #ffffff;
 }
 
 h1 {
     font-family: 'Cinzel', serif;
     color: gold;
     text-align: center;
-    font-size: 50px;
-    margin-bottom: 30px;
+    font-size: 60px;
+    margin-bottom: 40px;
+    text-shadow: 2px 2px 5px #000000;
 }
 
 h2 {
     font-family: 'Cinzel', serif;
-    color: #222831;
+    color: #ffffff;
+    background-color: #222831;
+    padding: 20px;
+    border-radius: 15px;
     text-align: center;
-    margin: 20px 0;
+    box-shadow: 5px 5px 15px #000000;
 }
 
 button {
     font-family: 'Roboto', sans-serif;
     cursor: pointer;
-    padding: 12px 25px;
-    border-radius: 6px;
+    transition: all 0.3s ease;
     border: none;
-    font-size: 16px;
+    border-radius: 10px;
+    font-size: 18px;
+    padding: 15px 30px;
     margin: 5px;
-    transition: 0.2s;
 }
 
 button:hover {
-    opacity: 0.85;
+    transform: scale(1.1);
+    box-shadow: 0px 0px 20px #FFD700;
+    opacity: 0.9;
+}
+
+.button-letterboxd {
+    background-color: #FFB700;
+    color: black;
+}
+
+.button-justwatch {
+    background-color: #00ADB5;
+    color: white;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -97,9 +113,9 @@ if st.button("🎥 Nouveau film"):
         justwatch_url = f"https://www.justwatch.com/fr/recherche?q={query}"
 
         st.markdown(
-            f"<div style='text-align:center;'>"
-            f"<a href='{film['url']}' target='_blank'><button style='background-color:#FFD700; color:black;'>Letterboxd</button></a>"
-            f"<a href='{justwatch_url}' target='_blank'><button style='background-color:#00ADB5; color:white;'>JustWatch</button></a>"
+            f"<div style='text-align:center; margin-top:20px;'>"
+            f"<a href='{film['url']}' target='_blank'><button class='button-letterboxd'>Letterboxd</button></a>"
+            f"<a href='{justwatch_url}' target='_blank'><button class='button-justwatch'>JustWatch</button></a>"
             f"</div>",
             unsafe_allow_html=True
         )
