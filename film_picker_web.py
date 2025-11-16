@@ -3,10 +3,10 @@ import streamlit as st
 import pandas as pd
 import urllib.parse
 
-# --- Configuration de la page ---
+# --- Configuration page ---
 st.set_page_config(page_title="Nouka Pictures", layout="wide")
 
-# --- CSS stylé minimal ---
+# --- CSS stylé avec animations et glow ---
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Roboto:wght@500&display=swap');
@@ -20,16 +20,29 @@ h1 {
     font-family: 'Cinzel', serif;
     color: gold;
     text-align: center;
-    font-size: 70px;
-    margin-bottom: 30px;
-    text-shadow: 2px 2px 5px #000000;
+    font-size: 80px;
+    margin-bottom: 40px;
+    text-shadow: 0 0 15px gold, 0 0 30px gold;
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    from {text-shadow: 0 0 10px gold, 0 0 20px gold;}
+    to {text-shadow: 0 0 20px gold, 0 0 40px gold;}
 }
 
 h2 {
     font-family: 'Cinzel', serif;
     color: #ffffff;
     text-align: center;
-    margin: 20px 0;
+    margin: 30px 0;
+    font-size: 40px;
+    animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(-20px);}
+    to {opacity: 1; transform: translateY(0);}
 }
 
 button {
@@ -39,23 +52,25 @@ button {
     border: none;
     border-radius: 12px;
     font-size: 18px;
-    padding: 15px 30px;
+    padding: 15px 35px;
     margin: 10px;
+    color: white;
+    box-shadow: 0 0 5px #000000;
 }
 
 button:hover {
-    transform: scale(1.08);
-    box-shadow: 0 0 10px #ffffff;
+    transform: scale(1.1);
+    box-shadow: 0 0 15px #ffffff;
     opacity: 0.95;
 }
 
 .button-letterboxd {
-    background-color: #FFB700;
+    background: linear-gradient(45deg, #FFB700, #FF6F00);
     color: black;
 }
 
 .button-justwatch {
-    background-color: #00ADB5;
+    background: linear-gradient(45deg, #00ADB5, #007B7F);
     color: white;
 }
 </style>
