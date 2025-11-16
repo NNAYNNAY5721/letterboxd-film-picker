@@ -6,7 +6,7 @@ import urllib.parse
 # --- Configuration page ---
 st.set_page_config(page_title="Nouka Pictures", layout="wide")
 
-# --- CSS stylé avec animations simplifiées ---
+# --- CSS stylé minimaliste avec animations ---
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Roboto:wght@500&display=swap');
@@ -66,6 +66,14 @@ button:hover {
     background: linear-gradient(45deg, #00ADB5, #007B7F);
     color: white;
 }
+
+.footer {
+    text-align: center;
+    margin-top: 50px;
+    font-family: 'Roboto', sans-serif;
+    color: #AAAAAA;
+    font-size: 16px;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -123,3 +131,6 @@ if st.button("🎥 Nouveau film"):
             f"</div>",
             unsafe_allow_html=True
         )
+
+# --- Footer avec pseudo créateur ---
+st.markdown("<div class='footer'>Créé par NNAY</div>", unsafe_allow_html=True)
