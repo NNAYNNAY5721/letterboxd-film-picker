@@ -2,12 +2,11 @@ import random
 import streamlit as st
 import pandas as pd
 import urllib.parse
-import requests
 
-# --- Configuration de la page ---
+# --- Configuration page ---
 st.set_page_config(page_title="Nouka Pictures", layout="wide")
 
-# --- CSS cinéma stylé ---
+# --- CSS simple pour style ---
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Roboto:wght@500&display=swap');
@@ -96,17 +95,6 @@ if uploaded_file:
     except Exception as e:
         st.error(f"Erreur lors de la lecture du CSV : {e}")
 
-# --- Fonction pour récupérer l'affiche via TMDb sans l'année ---
-def get_tmdb_poster(title):
-    api_key = "VOTRE_API_KEY_TMDb"  # <-- Remplace par ta clé TMDb
-    url = f"https://api.themoviedb.org/3/search/movie?api_key={api_key}&query={urllib.parse.quote(title)}&language=fr"
-    res = requests.get(url).json()
-    if res.get('results'):
-        poster_path = res['results'][0].get('poster_path')
-        if poster_path:
-            return f"https://image.tmdb.org/t/p/w500{poster_path}"
-    return None
-
 # --- Tirage aléatoire ---
 if st.button("🎥 Nouveau film"):
     if not films:
@@ -115,21 +103,20 @@ if st.button("🎥 Nouveau film"):
         film = random.choice(films)
         st.markdown(f"<h2>{film['title']} ({film['year']})</h2>", unsafe_allow_html=True)
 
-        # --- Affiche via TMDb ---
-        poster_url = get_tmdb_poster(film['title'])
-        if poster_url:
-            st.image(poster_url, use_column_width=True)
-        else:
-            st.warning("Affiche non disponible.")
-
-        # --- Lien JustWatch ---
+        # --- Image JustWatch ---
         query = urllib.parse.quote(film['title'])
-        justwatch_url = f"https://www.justwatch.com/fr/recherche?q={query}"
-
+        justwatch_search_url = f"https://www.justwatch.com/fr/recherche?q={query}"
+        # On utilise une URL générique d'image (vignette)
+        # JustWatch ne fournit pas d'API publique pour les images exactes
+        # Ici on peut juste montrer la page de recherche comme fallback
+        st.markdown(f"<p style='text-align:center;color:#aaa;'>Affiche disponible sur JustWatch :</p>", unsafe_allow_html=True)
+        st.markdown(f"<a href='{justwatch_search_url}' target='_blank'>Voir sur JustWatch</a>", unsafe_allow_html=True)
+        
+        # --- Boutons Letterboxd / JustWatch ---
         st.markdown(
             f"<div style='text-align:center;'>"
             f"<a href='{film['url']}' target='_blank'><button class='button-letterboxd'>Letterboxd</button></a>"
-            f"<a href='{justwatch_url}' target='_blank'><button class='button-justwatch'>JustWatch</button></a>"
+            f"<a href='{justwatch_search_url}' target='_blank'><button class='button-justwatch'>JustWatch</button></a>"
             f"</div>",
             unsafe_allow_html=True
         )
