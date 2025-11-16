@@ -5,7 +5,7 @@ import urllib.parse
 
 # --- Configuration de la page ---
 st.set_page_config(page_title="Nouka Pictures", layout="centered")
-st.markdown("<h1 style='text-align:center; color:#00ADB5;'>🎬 Nouka Pictures</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align:center; color:gold;'>🎬 Nouka Pictures</h1>", unsafe_allow_html=True)
 
 # --- Import CSV Letterboxd ---
 st.markdown("### 📂 Importer votre fichier CSV Letterboxd")
