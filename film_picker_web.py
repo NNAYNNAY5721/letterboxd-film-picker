@@ -6,7 +6,7 @@ import urllib.parse
 # --- Configuration de la page ---
 st.set_page_config(page_title="Nouka Pictures", layout="wide")
 
-# --- CSS pour style cinéma ultra-dynamique ---
+# --- CSS cinéma stylé avec glow blanc subtil ---
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Roboto:wght@500&display=swap');
@@ -23,7 +23,7 @@ h1 {
     text-align: center;
     font-size: 70px;
     margin-bottom: 40px;
-    text-shadow: 3px 3px 10px #000000;
+    text-shadow: 2px 2px 5px #000000;
 }
 
 h2 {
@@ -33,7 +33,7 @@ h2 {
     padding: 20px;
     border-radius: 15px;
     text-align: center;
-    box-shadow: 5px 5px 20px #000000;
+    box-shadow: 3px 3px 10px #000000;
     animation: fadeIn 1s ease-in;
 }
 
@@ -64,8 +64,8 @@ button {
 }
 
 button:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 25px #FFD700, 0 0 50px #FFD700;
+    transform: scale(1.08);
+    box-shadow: 0 0 10px #ffffff;  /* glow blanc subtil */
     opacity: 0.95;
 }
 </style>
