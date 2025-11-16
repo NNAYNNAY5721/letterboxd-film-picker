@@ -3,10 +3,10 @@ import streamlit as st
 import pandas as pd
 import urllib.parse
 
-# --- Configuration page ---
+# --- Configuration de la page ---
 st.set_page_config(page_title="Nouka Pictures", layout="wide")
 
-# --- CSS simple pour style ---
+# --- CSS stylé minimal ---
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Roboto:wght@500&display=swap');
@@ -103,20 +103,15 @@ if st.button("🎥 Nouveau film"):
         film = random.choice(films)
         st.markdown(f"<h2>{film['title']} ({film['year']})</h2>", unsafe_allow_html=True)
 
-        # --- Image JustWatch ---
+        # --- Lien JustWatch ---
         query = urllib.parse.quote(film['title'])
-        justwatch_search_url = f"https://www.justwatch.com/fr/recherche?q={query}"
-        # On utilise une URL générique d'image (vignette)
-        # JustWatch ne fournit pas d'API publique pour les images exactes
-        # Ici on peut juste montrer la page de recherche comme fallback
-        st.markdown(f"<p style='text-align:center;color:#aaa;'>Affiche disponible sur JustWatch :</p>", unsafe_allow_html=True)
-        st.markdown(f"<a href='{justwatch_search_url}' target='_blank'>Voir sur JustWatch</a>", unsafe_allow_html=True)
-        
+        justwatch_url = f"https://www.justwatch.com/fr/recherche?q={query}"
+
         # --- Boutons Letterboxd / JustWatch ---
         st.markdown(
             f"<div style='text-align:center;'>"
             f"<a href='{film['url']}' target='_blank'><button class='button-letterboxd'>Letterboxd</button></a>"
-            f"<a href='{justwatch_search_url}' target='_blank'><button class='button-justwatch'>JustWatch</button></a>"
+            f"<a href='{justwatch_url}' target='_blank'><button class='button-justwatch'>JustWatch</button></a>"
             f"</div>",
             unsafe_allow_html=True
         )
