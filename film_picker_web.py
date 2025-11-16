@@ -6,7 +6,7 @@ import urllib.parse
 # --- Configuration page ---
 st.set_page_config(page_title="Nouka Pictures", layout="wide")
 
-# --- CSS stylé minimaliste avec animations ---
+# --- CSS stylé avec bouton Insta fixe ---
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Roboto:wght@500&display=swap');
@@ -16,6 +16,7 @@ body {
     color: #ffffff;
 }
 
+/* Titre central */
 h1 {
     font-family: 'Cinzel', serif;
     color: gold;
@@ -24,6 +25,7 @@ h1 {
     margin-bottom: 40px;
 }
 
+/* Sous-titre */
 h2 {
     font-family: 'Cinzel', serif;
     color: #ffffff;
@@ -38,6 +40,7 @@ h2 {
     to {opacity: 1; transform: translateY(0);}
 }
 
+/* Boutons */
 button {
     font-family: 'Roboto', sans-serif;
     cursor: pointer;
@@ -70,6 +73,10 @@ button:hover {
 .button-instagram {
     background: linear-gradient(45deg, #C13584, #E1306C);
     color: white;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
 }
 
 .footer {
@@ -81,6 +88,13 @@ button:hover {
 }
 </style>
 """, unsafe_allow_html=True)
+
+# --- Bouton Instagram fixe ---
+st.markdown(
+    "<a href='https://www.instagram.com/watch_me_nnay/' target='_blank'>"
+    "<button class='button-instagram'>Instagram</button></a>",
+    unsafe_allow_html=True
+)
 
 # --- Titre ---
 st.markdown("<h1>🎬 Nouka Pictures</h1>", unsafe_allow_html=True)
@@ -128,12 +142,11 @@ if st.button("🎥 Nouveau film"):
         query = urllib.parse.quote(film['title'])
         justwatch_url = f"https://www.justwatch.com/fr/recherche?q={query}"
 
-        # --- Boutons Letterboxd / JustWatch / Instagram ---
+        # --- Boutons Letterboxd / JustWatch ---
         st.markdown(
             f"<div style='text-align:center;'>"
             f"<a href='{film['url']}' target='_blank'><button class='button-letterboxd'>Letterboxd</button></a>"
             f"<a href='{justwatch_url}' target='_blank'><button class='button-justwatch'>JustWatch</button></a>"
-            f"<a href='https://www.instagram.com/watch_me_nnay/' target='_blank'><button class='button-instagram'>Instagram</button></a>"
             f"</div>",
             unsafe_allow_html=True
         )
