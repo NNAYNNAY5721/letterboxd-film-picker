@@ -96,10 +96,10 @@ if uploaded_file:
     except Exception as e:
         st.error(f"Erreur lors de la lecture du CSV : {e}")
 
-# --- Fonction pour récupérer l'affiche via TMDb ---
-def get_tmdb_poster(title, year):
+# --- Fonction pour récupérer l'affiche via TMDb sans l'année ---
+def get_tmdb_poster(title):
     api_key = "VOTRE_API_KEY_TMDb"  # <-- Remplace par ta clé TMDb
-    url = f"https://api.themoviedb.org/3/search/movie?api_key={api_key}&query={urllib.parse.quote(title)}&year={year}&language=fr"
+    url = f"https://api.themoviedb.org/3/search/movie?api_key={api_key}&query={urllib.parse.quote(title)}&language=fr"
     res = requests.get(url).json()
     if res.get('results'):
         poster_path = res['results'][0].get('poster_path')
@@ -116,7 +116,7 @@ if st.button("🎥 Nouveau film"):
         st.markdown(f"<h2>{film['title']} ({film['year']})</h2>", unsafe_allow_html=True)
 
         # --- Affiche via TMDb ---
-        poster_url = get_tmdb_poster(film['title'], film['year'])
+        poster_url = get_tmdb_poster(film['title'])
         if poster_url:
             st.image(poster_url, use_column_width=True)
         else:
