@@ -5,7 +5,22 @@ import urllib.parse
 
 # --- Configuration de la page ---
 st.set_page_config(page_title="Nouka Pictures", layout="centered")
-st.markdown("<h1 style='text-align:center; color:gold;'>🎬 Nouka Pictures</h1>", unsafe_allow_html=True)
+
+# --- Style CSS pour la police et le titre ---
+st.markdown("""
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap');
+
+h1 {
+    font-family: 'Cinzel', serif;
+    color: gold;
+    text-align: center;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# --- Titre ---
+st.markdown("<h1>🎬 Nouka Pictures</h1>", unsafe_allow_html=True)
 
 # --- Import CSV Letterboxd ---
 st.markdown("### 📂 Importer votre fichier CSV Letterboxd")
