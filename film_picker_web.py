@@ -6,7 +6,7 @@ import urllib.parse
 # --- Configuration page ---
 st.set_page_config(page_title="Nouka Pictures", layout="wide")
 
-# --- CSS stylé avec bouton Insta fixe ---
+# --- CSS stylé minimaliste avec animations ---
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Roboto:wght@500&display=swap');
@@ -16,7 +16,6 @@ body {
     color: #ffffff;
 }
 
-/* Titre central */
 h1 {
     font-family: 'Cinzel', serif;
     color: gold;
@@ -25,7 +24,6 @@ h1 {
     margin-bottom: 40px;
 }
 
-/* Sous-titre */
 h2 {
     font-family: 'Cinzel', serif;
     color: #ffffff;
@@ -40,7 +38,6 @@ h2 {
     to {opacity: 1; transform: translateY(0);}
 }
 
-/* Boutons */
 button {
     font-family: 'Roboto', sans-serif;
     cursor: pointer;
@@ -73,10 +70,6 @@ button:hover {
 .button-instagram {
     background: linear-gradient(45deg, #C13584, #E1306C);
     color: white;
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 1000;
 }
 
 .footer {
@@ -88,13 +81,6 @@ button:hover {
 }
 </style>
 """, unsafe_allow_html=True)
-
-# --- Bouton Instagram fixe ---
-st.markdown(
-    "<a href='https://www.instagram.com/watch_me_nnay/' target='_blank'>"
-    "<button class='button-instagram'>Instagram</button></a>",
-    unsafe_allow_html=True
-)
 
 # --- Titre ---
 st.markdown("<h1>🎬 Nouka Pictures</h1>", unsafe_allow_html=True)
@@ -151,5 +137,10 @@ if st.button("🎥 Nouveau film"):
             unsafe_allow_html=True
         )
 
-# --- Footer avec pseudo créateur ---
-st.markdown("<div class='footer'>Créé par NNAY</div>", unsafe_allow_html=True)
+# --- Footer avec pseudo créateur et bouton Instagram ---
+st.markdown(
+    "<div class='footer'>Créé par NNAY<br>"
+    "<a href='https://www.instagram.com/watch_me_nnay/' target='_blank'>"
+    "<button class='button-instagram'>Instagram</button></a></div>",
+    unsafe_allow_html=True
+)
