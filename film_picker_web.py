@@ -2,11 +2,13 @@ import random
 import streamlit as st
 import pandas as pd
 import urllib.parse
+import requests
+from bs4 import BeautifulSoup
 
 # --- Configuration de la page ---
 st.set_page_config(page_title="Nouka Pictures", layout="wide")
 
-# --- CSS cinéma stylé avec glow blanc subtil ---
+# --- CSS cinéma stylé minimal pour focus sur l’affiche ---
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Roboto:wght@500&display=swap');
@@ -14,7 +16,6 @@ st.markdown("""
 body {
     background-color: #121212;
     color: #ffffff;
-    transition: background-color 0.5s ease;
 }
 
 h1 {
@@ -22,24 +23,15 @@ h1 {
     color: gold;
     text-align: center;
     font-size: 70px;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     text-shadow: 2px 2px 5px #000000;
 }
 
 h2 {
     font-family: 'Cinzel', serif;
     color: #ffffff;
-    background-color: rgba(34, 40, 49, 0.85);
-    padding: 20px;
-    border-radius: 15px;
     text-align: center;
-    box-shadow: 3px 3px 10px #000000;
-    animation: fadeIn 1s ease-in;
-}
-
-@keyframes fadeIn {
-    0% {opacity: 0; transform: translateY(-20px);}
-    100% {opacity: 1; transform: translateY(0);}
+    margin: 20px 0;
 }
 
 button {
@@ -51,22 +43,22 @@ button {
     font-size: 18px;
     padding: 15px 30px;
     margin: 10px;
-    color: white;
-    background: linear-gradient(45deg, #FFB700, #FF6F00);
-}
-
-.button-letterboxd {
-    background: linear-gradient(45deg, #FFB700, #FF6F00);
-}
-
-.button-justwatch {
-    background: linear-gradient(45deg, #00ADB5, #007B7F);
 }
 
 button:hover {
     transform: scale(1.08);
-    box-shadow: 0 0 10px #ffffff;  /* glow blanc subtil */
+    box-shadow: 0 0 10px #ffffff;
     opacity: 0.95;
+}
+
+.button-letterboxd {
+    background-color: #FFB700;
+    color: black;
+}
+
+.button-justwatch {
+    background-color: #00ADB5;
+    color: white;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -105,6 +97,19 @@ if uploaded_file:
     except Exception as e:
         st.error(f"Erreur lors de la lecture du CSV : {e}")
 
+# --- Fonction pour récupérer l'affiche depuis Letterboxd ---
+def get_poster(url):
+    try:
+        headers = {'User-Agent': 'Mozilla/5.0'}
+        res = requests.get(url, headers=headers)
+        soup = BeautifulSoup(res.text, 'html.parser')
+        og_image = soup.find('meta', property='og:image')
+        if og_image and og_image['content']:
+            return og_image['content']
+    except:
+        return None
+    return None
+
 # --- Tirage aléatoire ---
 if st.button("🎥 Nouveau film"):
     if not films:
@@ -113,7 +118,14 @@ if st.button("🎥 Nouveau film"):
         film = random.choice(films)
         st.markdown(f"<h2>{film['title']} ({film['year']})</h2>", unsafe_allow_html=True)
 
-        # Lien JustWatch
+        # --- Affiche ---
+        poster_url = get_poster(film['url'])
+        if poster_url:
+            st.image(poster_url, use_column_width=True)
+        else:
+            st.warning("Affiche non disponible.")
+
+        # --- Lien JustWatch ---
         query = urllib.parse.quote(film['title'])
         justwatch_url = f"https://www.justwatch.com/fr/recherche?q={query}"
 
