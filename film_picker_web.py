@@ -4,15 +4,17 @@ import pandas as pd
 import urllib.parse
 
 # --- Configuration de la page ---
-st.set_page_config(page_title="Nouka Pictures", layout="centered")
+st.set_page_config(page_title="Nouka Pictures", layout="wide")
 
-# --- CSS pour style cinématographique ---
+# --- CSS pour style cinéma premium ---
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap');
 
 body {
-    background-color: #121212;
+    background-image: url('https://images.unsplash.com/photo-1517602302552-471fe67acf66?auto=format&fit=crop&w=1740&q=80');
+    background-size: cover;
+    background-attachment: fixed;
     color: #ffffff;
 }
 
@@ -20,27 +22,30 @@ h1 {
     font-family: 'Cinzel', serif;
     color: gold;
     text-align: center;
-    font-size: 60px;
-    margin-bottom: 20px;
+    font-size: 70px;
+    margin-bottom: 40px;
+    text-shadow: 2px 2px 5px #000000;
 }
 
 h2 {
     font-family: 'Cinzel', serif;
     color: #ffffff;
-    background-color: #222831;
-    padding: 15px;
-    border-radius: 10px;
+    background-color: rgba(34, 40, 49, 0.85);
+    padding: 20px;
+    border-radius: 15px;
     text-align: center;
+    box-shadow: 5px 5px 15px #000000;
 }
 
 button {
     font-family: 'Cinzel', serif;
     cursor: pointer;
-    transition: 0.3s;
+    transition: all 0.3s ease;
 }
 
 button:hover {
-    opacity: 0.85;
+    transform: scale(1.1);
+    opacity: 0.9;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -98,12 +103,12 @@ if st.button("🎥 Nouveau film"):
         justwatch_url = f"https://www.justwatch.com/fr/recherche?q={query}"
 
         st.markdown(
-            f"<div style='text-align:center; margin-top:20px;'>"
+            f"<div style='text-align:center; margin-top:25px;'>"
             f"<a href='{film['url']}' target='_blank'>"
-            f"<button style='background-color:#FFB700; color:black; padding:12px 25px; border:none; border-radius:8px; font-size:18px; margin-right:15px;'>Voir sur Letterboxd</button>"
+            f"<button style='background-color:#FFB700; color:black; padding:15px 30px; border:none; border-radius:10px; font-size:18px; margin-right:15px;'>Voir sur Letterboxd</button>"
             f"</a>"
             f"<a href='{justwatch_url}' target='_blank'>"
-            f"<button style='background-color:#00ADB5; color:white; padding:12px 25px; border:none; border-radius:8px; font-size:18px;'>Voir sur JustWatch</button>"
+            f"<button style='background-color:#00ADB5; color:white; padding:15px 30px; border:none; border-radius:10px; font-size:18px;'>Voir sur JustWatch</button>"
             f"</a></div>",
             unsafe_allow_html=True
         )
