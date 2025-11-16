@@ -6,10 +6,10 @@ import urllib.parse
 # --- Configuration de la page ---
 st.set_page_config(page_title="Nouka Pictures", layout="wide")
 
-# --- CSS pour style cinéma premium ---
+# --- CSS pour style cinéma premium et boutons ---
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Roboto:wght@500&display=swap');
 
 body {
     background-image: url('https://images.unsplash.com/photo-1517602302552-471fe67acf66?auto=format&fit=crop&w=1740&q=80');
@@ -38,7 +38,7 @@ h2 {
 }
 
 button {
-    font-family: 'Cinzel', serif;
+    font-family: 'Roboto', sans-serif;
     cursor: pointer;
     transition: all 0.3s ease;
 }
