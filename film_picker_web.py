@@ -67,6 +67,11 @@ button:hover {
     color: white;
 }
 
+.button-instagram {
+    background: linear-gradient(45deg, #C13584, #E1306C);
+    color: white;
+}
+
 .footer {
     text-align: center;
     margin-top: 50px;
@@ -123,11 +128,12 @@ if st.button("🎥 Nouveau film"):
         query = urllib.parse.quote(film['title'])
         justwatch_url = f"https://www.justwatch.com/fr/recherche?q={query}"
 
-        # --- Boutons Letterboxd / JustWatch ---
+        # --- Boutons Letterboxd / JustWatch / Instagram ---
         st.markdown(
             f"<div style='text-align:center;'>"
             f"<a href='{film['url']}' target='_blank'><button class='button-letterboxd'>Letterboxd</button></a>"
             f"<a href='{justwatch_url}' target='_blank'><button class='button-justwatch'>JustWatch</button></a>"
+            f"<a href='https://www.instagram.com/watch_me_nnay/' target='_blank'><button class='button-instagram'>Instagram</button></a>"
             f"</div>",
             unsafe_allow_html=True
         )
