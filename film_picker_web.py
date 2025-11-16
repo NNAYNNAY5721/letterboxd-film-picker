@@ -6,7 +6,7 @@ import urllib.parse
 # --- Configuration de la page ---
 st.set_page_config(page_title="Nouka Pictures", layout="wide")
 
-# --- CSS pour style cinéma et boutons animés ---
+# --- CSS pour style cinéma ultra-dynamique ---
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Roboto:wght@500&display=swap');
@@ -14,25 +14,32 @@ st.markdown("""
 body {
     background-color: #121212;
     color: #ffffff;
+    transition: background-color 0.5s ease;
 }
 
 h1 {
     font-family: 'Cinzel', serif;
     color: gold;
     text-align: center;
-    font-size: 60px;
+    font-size: 70px;
     margin-bottom: 40px;
-    text-shadow: 2px 2px 5px #000000;
+    text-shadow: 3px 3px 10px #000000;
 }
 
 h2 {
     font-family: 'Cinzel', serif;
     color: #ffffff;
-    background-color: #222831;
+    background-color: rgba(34, 40, 49, 0.85);
     padding: 20px;
     border-radius: 15px;
     text-align: center;
-    box-shadow: 5px 5px 15px #000000;
+    box-shadow: 5px 5px 20px #000000;
+    animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+    0% {opacity: 0; transform: translateY(-20px);}
+    100% {opacity: 1; transform: translateY(0);}
 }
 
 button {
@@ -40,26 +47,26 @@ button {
     cursor: pointer;
     transition: all 0.3s ease;
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
     font-size: 18px;
     padding: 15px 30px;
-    margin: 5px;
+    margin: 10px;
+    color: white;
+    background: linear-gradient(45deg, #FFB700, #FF6F00);
+}
+
+.button-letterboxd {
+    background: linear-gradient(45deg, #FFB700, #FF6F00);
+}
+
+.button-justwatch {
+    background: linear-gradient(45deg, #00ADB5, #007B7F);
 }
 
 button:hover {
     transform: scale(1.1);
-    box-shadow: 0px 0px 20px #FFD700;
-    opacity: 0.9;
-}
-
-.button-letterboxd {
-    background-color: #FFB700;
-    color: black;
-}
-
-.button-justwatch {
-    background-color: #00ADB5;
-    color: white;
+    box-shadow: 0 0 25px #FFD700, 0 0 50px #FFD700;
+    opacity: 0.95;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -75,8 +82,6 @@ films = []
 if uploaded_file:
     try:
         df = pd.read_csv(uploaded_file, encoding='utf-8-sig')
-
-        # --- Colonnes ---
         col_map = {}
         for col in df.columns:
             c = col.lower()
@@ -113,7 +118,7 @@ if st.button("🎥 Nouveau film"):
         justwatch_url = f"https://www.justwatch.com/fr/recherche?q={query}"
 
         st.markdown(
-            f"<div style='text-align:center; margin-top:20px;'>"
+            f"<div style='text-align:center;'>"
             f"<a href='{film['url']}' target='_blank'><button class='button-letterboxd'>Letterboxd</button></a>"
             f"<a href='{justwatch_url}' target='_blank'><button class='button-justwatch'>JustWatch</button></a>"
             f"</div>",
