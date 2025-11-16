@@ -3,12 +3,11 @@ import streamlit as st
 import pandas as pd
 import urllib.parse
 import requests
-from bs4 import BeautifulSoup
 
 # --- Configuration de la page ---
 st.set_page_config(page_title="Nouka Pictures", layout="wide")
 
-# --- CSS cinéma stylé minimal pour focus sur l’affiche ---
+# --- CSS cinéma stylé ---
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Roboto:wght@500&display=swap');
@@ -97,17 +96,15 @@ if uploaded_file:
     except Exception as e:
         st.error(f"Erreur lors de la lecture du CSV : {e}")
 
-# --- Fonction pour récupérer l'affiche depuis Letterboxd ---
-def get_poster(url):
-    try:
-        headers = {'User-Agent': 'Mozilla/5.0'}
-        res = requests.get(url, headers=headers)
-        soup = BeautifulSoup(res.text, 'html.parser')
-        og_image = soup.find('meta', property='og:image')
-        if og_image and og_image['content']:
-            return og_image['content']
-    except:
-        return None
+# --- Fonction pour récupérer l'affiche via TMDb ---
+def get_tmdb_poster(title, year):
+    api_key = "VOTRE_API_KEY_TMDb"  # <-- Remplace par ta clé TMDb
+    url = f"https://api.themoviedb.org/3/search/movie?api_key={api_key}&query={urllib.parse.quote(title)}&year={year}&language=fr"
+    res = requests.get(url).json()
+    if res.get('results'):
+        poster_path = res['results'][0].get('poster_path')
+        if poster_path:
+            return f"https://image.tmdb.org/t/p/w500{poster_path}"
     return None
 
 # --- Tirage aléatoire ---
@@ -118,8 +115,8 @@ if st.button("🎥 Nouveau film"):
         film = random.choice(films)
         st.markdown(f"<h2>{film['title']} ({film['year']})</h2>", unsafe_allow_html=True)
 
-        # --- Affiche ---
-        poster_url = get_poster(film['url'])
+        # --- Affiche via TMDb ---
+        poster_url = get_tmdb_poster(film['title'], film['year'])
         if poster_url:
             st.image(poster_url, use_column_width=True)
         else:
