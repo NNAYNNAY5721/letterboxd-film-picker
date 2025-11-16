@@ -6,7 +6,7 @@ import urllib.parse
 # --- Configuration page ---
 st.set_page_config(page_title="Nouka Pictures", layout="wide")
 
-# --- CSS stylé minimaliste avec animations ---
+# --- CSS minimaliste ---
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Roboto:wght@500&display=swap');
@@ -67,9 +67,19 @@ button:hover {
     color: white;
 }
 
+/* Bouton Instagram minimaliste gris */
 .button-instagram {
-    background: linear-gradient(45deg, #C13584, #E1306C);
-    color: white;
+    background-color: #AAAAAA;
+    color: #121212;
+    padding: 8px 20px;
+    font-size: 14px;
+    border-radius: 8px;
+    box-shadow: none;
+}
+
+.button-instagram:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 5px #ffffff;
 }
 
 .footer {
@@ -137,7 +147,7 @@ if st.button("🎥 Nouveau film"):
             unsafe_allow_html=True
         )
 
-# --- Footer avec pseudo créateur et bouton Instagram ---
+# --- Footer avec pseudo créateur et bouton Instagram minimaliste ---
 st.markdown(
     "<div class='footer'>Créé par NNAY<br>"
     "<a href='https://www.instagram.com/watch_me_nnay/' target='_blank'>"
