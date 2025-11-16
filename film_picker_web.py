@@ -6,15 +6,41 @@ import urllib.parse
 # --- Configuration de la page ---
 st.set_page_config(page_title="Nouka Pictures", layout="centered")
 
-# --- Style CSS pour la police et le titre ---
+# --- CSS pour style cinématographique ---
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap');
+
+body {
+    background-color: #121212;
+    color: #ffffff;
+}
 
 h1 {
     font-family: 'Cinzel', serif;
     color: gold;
     text-align: center;
+    font-size: 60px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-family: 'Cinzel', serif;
+    color: #ffffff;
+    background-color: #222831;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+button {
+    font-family: 'Cinzel', serif;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    opacity: 0.85;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -63,8 +89,7 @@ if st.button("🎥 Nouveau film"):
     else:
         film = random.choice(films)
         st.markdown(
-            f"<h2 style='text-align:center; color:#222831; background-color:#00ADB5; padding:10px; border-radius:10px;'>"
-            f"{film['title']} ({film['year']})</h2>",
+            f"<h2>{film['title']} ({film['year']})</h2>",
             unsafe_allow_html=True
         )
 
@@ -73,12 +98,12 @@ if st.button("🎥 Nouveau film"):
         justwatch_url = f"https://www.justwatch.com/fr/recherche?q={query}"
 
         st.markdown(
-            f"<div style='text-align:center; margin-top:10px;'>"
+            f"<div style='text-align:center; margin-top:20px;'>"
             f"<a href='{film['url']}' target='_blank'>"
-            f"<button style='background-color:#FF5722; color:white; padding:10px 20px; border:none; border-radius:5px; font-size:16px; margin-right:10px;'>Voir sur Letterboxd</button>"
+            f"<button style='background-color:#FFB700; color:black; padding:12px 25px; border:none; border-radius:8px; font-size:18px; margin-right:15px;'>Voir sur Letterboxd</button>"
             f"</a>"
             f"<a href='{justwatch_url}' target='_blank'>"
-            f"<button style='background-color:#00ADB5; color:white; padding:10px 20px; border:none; border-radius:5px; font-size:16px;'>Voir sur JustWatch</button>"
+            f"<button style='background-color:#00ADB5; color:white; padding:12px 25px; border:none; border-radius:8px; font-size:18px;'>Voir sur JustWatch</button>"
             f"</a></div>",
             unsafe_allow_html=True
         )
