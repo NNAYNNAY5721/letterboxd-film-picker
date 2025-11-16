@@ -6,7 +6,7 @@ import urllib.parse
 # --- Configuration page ---
 st.set_page_config(page_title="Nouka Pictures", layout="wide")
 
-# --- CSS stylé avec animations et glow ---
+# --- CSS stylé avec animations simplifiées ---
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Roboto:wght@500&display=swap');
@@ -22,13 +22,6 @@ h1 {
     text-align: center;
     font-size: 80px;
     margin-bottom: 40px;
-    text-shadow: 0 0 15px gold, 0 0 30px gold;
-    animation: glow 2s infinite alternate;
-}
-
-@keyframes glow {
-    from {text-shadow: 0 0 10px gold, 0 0 20px gold;}
-    to {text-shadow: 0 0 20px gold, 0 0 40px gold;}
 }
 
 h2 {
