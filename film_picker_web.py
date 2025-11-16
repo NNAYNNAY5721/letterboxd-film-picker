@@ -4,48 +4,46 @@ import pandas as pd
 import urllib.parse
 
 # --- Configuration de la page ---
-st.set_page_config(page_title="Nouka Pictures", layout="wide")
+st.set_page_config(page_title="Nouka Pictures", layout="centered")
 
-# --- CSS pour style cinéma premium et boutons ---
+# --- CSS minimaliste ---
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Roboto:wght@500&display=swap');
 
 body {
-    background-image: url('https://images.unsplash.com/photo-1517602302552-471fe67acf66?auto=format&fit=crop&w=1740&q=80');
-    background-size: cover;
-    background-attachment: fixed;
-    color: #ffffff;
+    background-color: #f9f9f9;
+    color: #222831;
 }
 
 h1 {
     font-family: 'Cinzel', serif;
     color: gold;
     text-align: center;
-    font-size: 70px;
-    margin-bottom: 40px;
-    text-shadow: 2px 2px 5px #000000;
+    font-size: 50px;
+    margin-bottom: 30px;
 }
 
 h2 {
     font-family: 'Cinzel', serif;
-    color: #ffffff;
-    background-color: rgba(34, 40, 49, 0.85);
-    padding: 20px;
-    border-radius: 15px;
+    color: #222831;
     text-align: center;
-    box-shadow: 5px 5px 15px #000000;
+    margin: 20px 0;
 }
 
 button {
     font-family: 'Roboto', sans-serif;
     cursor: pointer;
-    transition: all 0.3s ease;
+    padding: 12px 25px;
+    border-radius: 6px;
+    border: none;
+    font-size: 16px;
+    margin: 5px;
+    transition: 0.2s;
 }
 
 button:hover {
-    transform: scale(1.1);
-    opacity: 0.9;
+    opacity: 0.85;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -54,8 +52,7 @@ button:hover {
 st.markdown("<h1>🎬 Nouka Pictures</h1>", unsafe_allow_html=True)
 
 # --- Import CSV Letterboxd ---
-st.markdown("### 📂 Importer votre fichier CSV Letterboxd")
-uploaded_file = st.file_uploader("Choisissez un fichier CSV exporté depuis Letterboxd", type="csv")
+uploaded_file = st.file_uploader("Importer votre CSV Letterboxd", type="csv")
 
 films = []
 
@@ -63,7 +60,7 @@ if uploaded_file:
     try:
         df = pd.read_csv(uploaded_file, encoding='utf-8-sig')
 
-        # --- Détecter les colonnes ---
+        # --- Colonnes ---
         col_map = {}
         for col in df.columns:
             c = col.lower()
@@ -81,34 +78,28 @@ if uploaded_file:
                     "year": row[col_map['year']],
                     "url": row[col_map['url']]
                 })
-            st.success(f"✅ {len(films)} films chargés depuis le CSV Letterboxd !")
+            st.success(f"{len(films)} films chargés ✅")
         else:
-            st.error(f"Impossible de détecter Title, Year et URL automatiquement.\nColonnes détectées : {list(df.columns)}")
+            st.error("Impossible de détecter Title, Year et URL.")
     except Exception as e:
         st.error(f"Erreur lors de la lecture du CSV : {e}")
 
-# --- Tirer un film aléatoire ---
+# --- Tirage aléatoire ---
 if st.button("🎥 Nouveau film"):
     if not films:
         st.warning("Aucun film disponible. Importez un CSV.")
     else:
         film = random.choice(films)
-        st.markdown(
-            f"<h2>{film['title']} ({film['year']})</h2>",
-            unsafe_allow_html=True
-        )
+        st.markdown(f"<h2>{film['title']} ({film['year']})</h2>", unsafe_allow_html=True)
 
-        # --- Lien JustWatch ---
+        # Lien JustWatch
         query = urllib.parse.quote(film['title'])
         justwatch_url = f"https://www.justwatch.com/fr/recherche?q={query}"
 
         st.markdown(
-            f"<div style='text-align:center; margin-top:25px;'>"
-            f"<a href='{film['url']}' target='_blank'>"
-            f"<button style='background-color:#FFB700; color:black; padding:15px 30px; border:none; border-radius:10px; font-size:18px; margin-right:15px;'>Voir sur Letterboxd</button>"
-            f"</a>"
-            f"<a href='{justwatch_url}' target='_blank'>"
-            f"<button style='background-color:#00ADB5; color:white; padding:15px 30px; border:none; border-radius:10px; font-size:18px;'>Voir sur JustWatch</button>"
-            f"</a></div>",
+            f"<div style='text-align:center;'>"
+            f"<a href='{film['url']}' target='_blank'><button style='background-color:#FFD700; color:black;'>Letterboxd</button></a>"
+            f"<a href='{justwatch_url}' target='_blank'><button style='background-color:#00ADB5; color:white;'>JustWatch</button></a>"
+            f"</div>",
             unsafe_allow_html=True
         )
