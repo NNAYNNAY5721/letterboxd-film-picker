@@ -2,14 +2,15 @@ import random
 import streamlit as st
 import pandas as pd
 import urllib.parse
+import time
 
 # --- Configuration page ---
 st.set_page_config(page_title="Nouka Pictures", layout="wide")
 
-# --- CSS minimaliste ---
+# --- CSS global ---
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Roboto:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@700&family=Roboto:wght@500&display=swap');
 
 body {
     background-color: #121212;
@@ -17,15 +18,19 @@ body {
 }
 
 h1 {
-    font-family: 'Cinzel', serif;
-    color: gold;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 800;
+    font-size: 72px;
     text-align: center;
-    font-size: 80px;
+    background: linear-gradient(90deg, #FFD700, #FFFACD);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
     margin-bottom: 40px;
 }
 
 h2 {
-    font-family: 'Cinzel', serif;
+    font-family: 'Raleway', sans-serif;
     color: #ffffff;
     text-align: center;
     margin: 30px 0;
@@ -67,7 +72,6 @@ button:hover {
     color: white;
 }
 
-/* Bouton Instagram minimaliste gris */
 .button-instagram {
     background-color: #AAAAAA;
     color: #121212;
@@ -82,6 +86,25 @@ button:hover {
     box-shadow: 0 0 5px #ffffff;
 }
 
+/* Roulette */
+.roulette-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+.roulette-item {
+    width: 220px;
+    padding: 15px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+    text-align: center;
+    transition: 0.2s;
+}
+
 .footer {
     text-align: center;
     margin-top: 50px;
@@ -93,7 +116,7 @@ button:hover {
 """, unsafe_allow_html=True)
 
 # --- Titre ---
-st.markdown("<h1>🎬 Nouka Pictures</h1>", unsafe_allow_html=True)
+st.markdown("<h1>Nouka Pictures</h1>", unsafe_allow_html=True)
 
 # --- Import CSV Letterboxd ---
 uploaded_file = st.file_uploader("Importer votre CSV Letterboxd", type="csv")
@@ -126,26 +149,38 @@ if uploaded_file:
     except Exception as e:
         st.error(f"Erreur lors de la lecture du CSV : {e}")
 
-# --- Tirage aléatoire ---
-if st.button("🎥 Nouveau film"):
+# --- Tirage roulette ---
+def run_roulette(films_list, spins=25):
+    placeholder = st.empty()
+    n = len(films_list)
+    final_film = random.choice(films_list)
+
+    for i in range(spins):
+        display_films = random.sample(films_list, min(3, n))
+        html_items = "".join([f"<div class='roulette-item'><h3>{f['title']}</h3></div>" for f in display_films])
+        placeholder.markdown(f"<div class='roulette-container'>{html_items}</div>", unsafe_allow_html=True)
+        t = i / spins
+        time.sleep(0.02 + t**2 * 0.08)
+
+    # Affichage final
+    placeholder.empty()
+    st.markdown(f"<h2>{final_film['title']} ({final_film['year']})</h2>", unsafe_allow_html=True)
+    query = urllib.parse.quote(final_film['title'])
+    justwatch_url = f"https://www.justwatch.com/fr/recherche?q={query}"
+    st.markdown(
+        f"<div style='text-align:center;'>"
+        f"<a href='{final_film['url']}' target='_blank'><button class='button-letterboxd'>Letterboxd</button></a>"
+        f"<a href='{justwatch_url}' target='_blank'><button class='button-justwatch'>JustWatch</button></a>"
+        f"</div>",
+        unsafe_allow_html=True
+    )
+
+# --- Bouton roulette ---
+if st.button("🎰 Lancer la Roulette"):
     if not films:
         st.warning("Aucun film disponible. Importez un CSV.")
     else:
-        film = random.choice(films)
-        st.markdown(f"<h2>{film['title']} ({film['year']})</h2>", unsafe_allow_html=True)
-
-        # --- Lien JustWatch ---
-        query = urllib.parse.quote(film['title'])
-        justwatch_url = f"https://www.justwatch.com/fr/recherche?q={query}"
-
-        # --- Boutons Letterboxd / JustWatch ---
-        st.markdown(
-            f"<div style='text-align:center;'>"
-            f"<a href='{film['url']}' target='_blank'><button class='button-letterboxd'>Letterboxd</button></a>"
-            f"<a href='{justwatch_url}' target='_blank'><button class='button-justwatch'>JustWatch</button></a>"
-            f"</div>",
-            unsafe_allow_html=True
-        )
+        run_roulette(films)
 
 # --- Footer avec pseudo créateur et bouton Instagram minimaliste ---
 st.markdown(
